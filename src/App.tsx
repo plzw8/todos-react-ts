@@ -50,28 +50,23 @@ function Footer() {
 }
 
 function Main() {
-  const state = useSelector((state: RootState) => state.todo);
-  console.log(state);
+  const list = useSelector((state: RootState) => state.todo.list);
+  console.log(list);
 
   return (
     <section className="main">
       <input id="toggle-all" className="toggle-all" type="checkbox" />
       <label htmlFor="toggle-all">全选</label>
       <ul className="todo-list">
-        <li className="completed">
-          <div className="view">
-            <input className="toggle" type="checkbox" />
-            <label>吃饭</label>
-            <button className="destroy"></button>
-          </div>
-        </li>
-        <li className="">
-          <div className="view">
-            <input className="toggle" type="checkbox" />
-            <label>睡觉</label>
-            <button className="destroy"></button>
-          </div>
-        </li>
+        {list.map((item) => (
+          <li className="completed" key={item.id}>
+            <div className="view">
+              <input className="toggle" type="checkbox" />
+              <label>{item.task}</label>
+              <button className="destroy"></button>
+            </div>
+          </li>
+        ))}
       </ul>
     </section>
   );
