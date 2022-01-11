@@ -2,6 +2,8 @@
  *  学习目标：Todos 案例
  */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/reducer';
 import './styles/base.css';
 import './styles/index.css';
 
@@ -48,6 +50,9 @@ function Footer() {
 }
 
 function Main() {
+  const state = useSelector((state: RootState) => state.todo);
+  console.log(state);
+
   return (
     <section className="main">
       <input id="toggle-all" className="toggle-all" type="checkbox" />
