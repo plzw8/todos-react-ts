@@ -1,44 +1,39 @@
-import {
-  TODO_ADD,
-  TODO_CHECK,
-  TODO_CLEAR,
-  TODO_DEL,
-  TODO_SELECT_ALL,
-  TODO_TYPE,
-} from './actionType';
+import { ActionType } from '../reducer/todo';
 
-export const addActionCreator = (task: string) => {
+export const addActionCreator = (task: string): ActionType => {
   return {
-    type: TODO_ADD,
+    type: 'todo/add',
     payload: task,
   };
 };
-export const delActionCreator = (id: number) => {
+export const delActionCreator = (id: number): ActionType => {
   return {
-    type: TODO_DEL,
+    type: 'todo/del',
     payload: id,
   };
 };
-export const checkActionCreator = (id: number) => {
+export const checkActionCreator = (id: number): ActionType => {
   return {
-    type: TODO_CHECK,
+    type: 'todo/check',
     payload: id,
   };
 };
-export const changeTypeActionCreator = (type: string) => {
+export const changeTypeActionCreator = (type: string): ActionType => {
   return {
-    type: TODO_TYPE,
+    type: 'todo/type',
     payload: type,
   };
 };
-export const clearTypeActionCreator = () => {
+export const clearTypeActionCreator = (): ActionType => {
   return {
-    type: TODO_CLEAR,
+    type: 'todo/clear',
   };
 };
-export const selectAllTypeActionCreator = (isSelectAll: boolean) => {
+export const selectAllTypeActionCreator = (
+  isSelectAll: boolean
+): ActionType => {
   return {
-    type: TODO_SELECT_ALL,
+    type: 'todo/select',
     payload: isSelectAll,
   };
 };

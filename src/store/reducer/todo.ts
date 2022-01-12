@@ -1,11 +1,3 @@
-import {
-  TODO_ADD,
-  TODO_CHECK,
-  TODO_CLEAR,
-  TODO_DEL,
-  TODO_SELECT_ALL,
-  TODO_TYPE,
-} from '../action/actionType';
 // 声明state的Type
 type StateType = {
   list: {
@@ -32,56 +24,74 @@ const initialState: StateType = {
 };
 
 // 声明action的Type
-// type ActionType = {
-//   type: string;
-//   payload: string;
-// };
-export default function todoReducer(
-  state = initialState,
-  { type, payload }: any
-) {
-  switch (type) {
-    case TODO_ADD:
+export type ActionType =
+  | {
+      type: 'todo/add';
+      payload: string;
+    }
+  | {
+      type: 'todo/del';
+      payload: number;
+    }
+  | {
+      type: 'todo/check';
+      payload: number;
+    }
+  | {
+      type: 'todo/type';
+      payload: string;
+    }
+  | {
+      type: 'todo/clear';
+    }
+  | {
+      type: 'todo/select';
+      payload: boolean;
+    };
+
+export default function todoReducer(state = initialState, action: ActionType) {
+  switch (action.type) {
+    case 'todo/add':
       return {
         ...state,
         list: [
           {
             id: Date.now(),
-            task: payload,
+            task: action.payload,
             isDone: false,
           },
           ...state.list,
         ],
       };
-    case TODO_DEL:
+    case 'todo/del':
       return {
         ...state,
-        list: state.list.filter((item) => item.id !== payload),
+        list: state.list.filter((item) => item.id !== action.payload),
       };
-    case TODO_CHECK:
+    case 'todo/check':
       return {
         ...state,
         list: state.list.map((item) => ({
           ...item,
-          isDone: item.id === payload ? !item.isDone : item.isDone,
+          isDone: item.id === action.payload ? !item.isDone : item.isDone,
         })),
       };
-    case TODO_TYPE:
+    case 'todo/type':
       return {
         ...state,
-        current: payload,
+        current: action.payload,
       };
-    case TODO_CLEAR:
+    case 'todo/clear':
       return {
         ...state,
         list: state.list.filter((item) => !item.isDone),
       };
-    case TODO_SELECT_ALL:
+    case 'todo/select':
       return {
         ...state,
         list: state.list.map((item) => ({
           ...item,
-          isDone: true,
+          isDone: !action.payload,
         })),
       };
     default:

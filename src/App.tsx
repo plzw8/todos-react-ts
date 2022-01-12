@@ -110,7 +110,7 @@ function Main() {
         type="checkbox"
         checked={isSelectAll}
         onChange={(e) => {
-          dispatch(selectAllTypeActionCreator(true));
+          dispatch(selectAllTypeActionCreator(isSelectAll));
         }}
       />
       <label htmlFor="toggle-all">全选</label>
