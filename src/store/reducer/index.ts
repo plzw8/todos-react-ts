@@ -7,4 +7,4 @@ const rootReducer = combineReducers({
 });
 export default rootReducer;
 // 导出类型 防止报 DefaultRootState的错
-export type RootState = ReturnType<typeof rootReducer>;
+// export type RootState = ReturnType<typeof rootReducer>;
