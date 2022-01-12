@@ -3,7 +3,7 @@
  */
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addActionCreator } from './store/action/todo';
+import { addActionCreator, delActionCreator } from './store/action/todo';
 import { RootState } from './store/reducer';
 import './styles/base.css';
 import './styles/index.css';
@@ -53,7 +53,7 @@ function Footer() {
 
 function Main() {
   const list = useSelector((state: RootState) => state.todo.list);
-  console.log(list);
+  const dispatch = useDispatch();
 
   return (
     <section className="main">
@@ -65,7 +65,12 @@ function Main() {
             <div className="view">
               <input className="toggle" type="checkbox" />
               <label>{item.task}</label>
-              <button className="destroy"></button>
+              <button
+                className="destroy"
+                onClick={() => {
+                  dispatch(delActionCreator(item.id));
+                }}
+              ></button>
             </div>
           </li>
         ))}

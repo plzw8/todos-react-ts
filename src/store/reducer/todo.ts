@@ -1,4 +1,4 @@
-import { TODO_ADD } from '../action/actionType';
+import { TODO_ADD, TODO_DEL } from '../action/actionType';
 // 声明state的Type
 type StateType = {
   list: {
@@ -20,17 +20,16 @@ const initialState: StateType = {
 };
 
 // 声明action的Type
-type ActionType = {
-  type: string;
-  payload: string;
-};
+// type ActionType = {
+//   type: string;
+//   payload: string;
+// };
 export default function todoReducer(
   state = initialState,
-  { type, payload }: ActionType
+  { type, payload }: any
 ) {
   switch (type) {
     case TODO_ADD:
-      console.log('reducer执行');
       return {
         ...state,
         list: [
@@ -41,6 +40,11 @@ export default function todoReducer(
           },
           ...state.list,
         ],
+      };
+    case TODO_DEL:
+      return {
+        ...state,
+        list: state.list.filter((item) => item.id !== payload),
       };
 
     default:
