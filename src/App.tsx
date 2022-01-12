@@ -28,10 +28,13 @@ export default function App() {
 }
 
 function Footer() {
+  const list = useSelector((state: RootState) => state.todo.list);
+  // 剩余长度
+  const restVal = list.filter((item) => !item.isDone)?.length;
   return (
     <footer className="footer">
       <span className="todo-count">
-        <strong>1</strong> 剩余
+        <strong>{restVal}</strong> 剩余
       </span>
       <ul className="filters">
         <li>
