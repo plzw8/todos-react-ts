@@ -1,46 +1,30 @@
+type StateType = {
+  id: number;
+  task: string;
+  isDone: boolean;
+}[];
 const initialState = {
-  list: [
-    {
-      id: 1,
-      task: 'hi',
-      isDone: false,
-    },
-    {
-      id: 2,
-      task: 'react',
-      isDone: true,
-    },
-  ],
-  current: 'all' as CurrentFilterType,
+  // 写法1
+  // list:
+  //   (JSON.parse(
+  //     localStorage.getItem('todos-ts-list') as string
+  //   ) as StateType) || [],
+  // 写法2
+  list: JSON.parse(localStorage.getItem('todos-ts-list') || '[]') as StateType,
+  current: (localStorage.getItem('todos-ts-type') ||
+    'all') as CurrentFilterType,
 };
 // 声明current的type 使用字面量类型
 export type CurrentFilterType = 'all' | 'active' | 'completed';
 
 // 声明action的Type
 export type ActionType =
-  | {
-      type: 'todo/add';
-      payload: string;
-    }
-  | {
-      type: 'todo/del';
-      payload: number;
-    }
-  | {
-      type: 'todo/check';
-      payload: number;
-    }
-  | {
-      type: 'todo/type';
-      payload: CurrentFilterType;
-    }
-  | {
-      type: 'todo/clear';
-    }
-  | {
-      type: 'todo/select';
-      payload: boolean;
-    };
+  | { type: 'todo/add'; payload: string }
+  | { type: 'todo/del'; payload: number }
+  | { type: 'todo/check'; payload: number }
+  | { type: 'todo/type'; payload: CurrentFilterType }
+  | { type: 'todo/clear' }
+  | { type: 'todo/select'; payload: boolean };
 
 export default function todoReducer(
   state = initialState,

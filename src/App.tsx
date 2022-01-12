@@ -1,7 +1,7 @@
 /**
  *  学习目标：Todos 案例
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   addActionCreator,
@@ -32,9 +32,10 @@ export default function App() {
 
 function Footer() {
   const dispatch = useDispatch();
-  // const list = useSelector((state: RootState) => state.todo.list);
-  // const type = useSelector((state: RootState) => state.todo.current);
   const { list, current: type } = useAppSelector((state) => state.todo);
+  useEffect(() => {
+    localStorage.setItem('todos-ts-type', type);
+  }, [type]);
 
   // 剩余长度
   const restVal = list.filter((item) => !item.isDone)?.length;
@@ -88,9 +89,10 @@ function Footer() {
 }
 
 function Main() {
-  // const list = useSelector((state: RootState) => state.todo.list);
-  // const type = useSelector((state: RootState) => state.todo.current);
   const { list, current: type } = useAppSelector((state) => state.todo);
+  useEffect(() => {
+    localStorage.setItem('todos-ts-list', JSON.stringify(list));
+  }, [list]);
   const dispatch = useDispatch();
   // 根据type 定义一个显示列表
   const showList = list.filter((item) => {
