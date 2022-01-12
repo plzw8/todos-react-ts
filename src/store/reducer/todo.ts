@@ -1,13 +1,4 @@
-// 声明state的Type
-type StateType = {
-  list: {
-    id: number;
-    task: string;
-    isDone: boolean;
-  }[];
-  current: string;
-};
-const initialState: StateType = {
+const initialState = {
   list: [
     {
       id: 1,
