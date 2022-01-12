@@ -1,4 +1,4 @@
-import { TODO_ADD, TODO_CHECK, TODO_DEL } from './actionType';
+import { TODO_ADD, TODO_CHECK, TODO_DEL, TODO_TYPE } from './actionType';
 
 export const addActionCreator = (task: string) => {
   return {
@@ -16,5 +16,11 @@ export const checkActionCreator = (id: number) => {
   return {
     type: TODO_CHECK,
     payload: id,
+  };
+};
+export const changeTypeActionCreator = (type: string) => {
+  return {
+    type: TODO_TYPE,
+    payload: type,
   };
 };

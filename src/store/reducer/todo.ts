@@ -1,4 +1,9 @@
-import { TODO_ADD, TODO_CHECK, TODO_DEL } from '../action/actionType';
+import {
+  TODO_ADD,
+  TODO_CHECK,
+  TODO_DEL,
+  TODO_TYPE,
+} from '../action/actionType';
 // 声明state的Type
 type StateType = {
   list: {
@@ -58,6 +63,11 @@ export default function todoReducer(
           ...item,
           isDone: item.id === payload ? !item.isDone : item.isDone,
         })),
+      };
+    case TODO_TYPE:
+      return {
+        ...state,
+        current: payload,
       };
 
     default:

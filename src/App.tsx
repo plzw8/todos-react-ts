@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addActionCreator,
+  changeTypeActionCreator,
   checkActionCreator,
   delActionCreator,
 } from './store/action/todo';
@@ -28,7 +29,10 @@ export default function App() {
 }
 
 function Footer() {
+  const dispatch = useDispatch();
   const list = useSelector((state: RootState) => state.todo.list);
+  const type = useSelector((state: RootState) => state.todo.current);
+
   // 剩余长度
   const restVal = list.filter((item) => !item.isDone)?.length;
   return (
@@ -37,18 +41,33 @@ function Footer() {
         <strong>{restVal}</strong> 剩余
       </span>
       <ul className="filters">
-        <li>
-          <a className="all selected" href="#/">
+        <li
+          onClick={() => {
+            dispatch(changeTypeActionCreator('all'));
+          }}
+        >
+          <a className={type === 'all' ? 'selected' : ''} href="#/">
             全部
           </a>
         </li>
-        <li>
-          <a className="active" href="#/active">
+        <li
+          onClick={() => {
+            dispatch(changeTypeActionCreator('active'));
+          }}
+        >
+          <a className={type === 'active' ? 'selected' : ''} href="#/active">
             未完成
           </a>
         </li>
-        <li>
-          <a className="completed" href="#/completed">
+        <li
+          onClick={() => {
+            dispatch(changeTypeActionCreator('completed'));
+          }}
+        >
+          <a
+            className={type === 'completed' ? 'selected' : ''}
+            href="#/completed"
+          >
             已完成
           </a>
         </li>
@@ -61,6 +80,13 @@ function Footer() {
 function Main() {
   const list = useSelector((state: RootState) => state.todo.list);
   const dispatch = useDispatch();
+  // 根据type 定义一个显示列表
+  const type = useSelector((state: RootState) => state.todo.current);
+  const showList = list.filter((item) => {
+    if (type === 'active') return !item.isDone;
+    if (type === 'completed') return item.isDone;
+    return item;
+  });
   // 点击小选框
   const handleClickCheckbox = (id: number) => {
     dispatch(checkActionCreator(id));
@@ -70,7 +96,7 @@ function Main() {
       <input id="toggle-all" className="toggle-all" type="checkbox" />
       <label htmlFor="toggle-all">全选</label>
       <ul className="todo-list">
-        {list.map((item) => (
+        {showList.map((item) => (
           <li className={item.isDone ? 'completed' : ''} key={item.id}>
             <div className="view">
               {/* 改造为受控组件 */}
