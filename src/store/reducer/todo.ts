@@ -22,7 +22,7 @@ const initialState: StateType = {
 // 声明action的Type
 type ActionType = {
   type: string;
-  payload: number | string;
+  payload: string;
 };
 export default function todoReducer(
   state = initialState,
@@ -30,7 +30,18 @@ export default function todoReducer(
 ) {
   switch (type) {
     case TODO_ADD:
-      return { ...state };
+      console.log('reducer执行');
+      return {
+        ...state,
+        list: [
+          {
+            id: Date.now(),
+            task: payload,
+            isDone: false,
+          },
+          ...state.list,
+        ],
+      };
 
     default:
       return state;

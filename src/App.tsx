@@ -1,26 +1,28 @@
 /**
  *  学习目标：Todos 案例
  */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addActionCreator } from './store/action/todo';
 import { RootState } from './store/reducer';
 import './styles/base.css';
 import './styles/index.css';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <section className="todoapp">
-        {/* 头部 */}
-        <Header></Header>
-        {/* 主体 */}
-        <Main></Main>
-        {/* 底部 */}
-        <Footer></Footer>
-      </section>
-    );
-  }
+import React from 'react';
+
+export default function App() {
+  return (
+    <section className="todoapp">
+      {/* 头部 */}
+      <Header></Header>
+      {/* 主体 */}
+      <Main></Main>
+      {/* 底部 */}
+      <Footer></Footer>
+    </section>
+  );
 }
+
 function Footer() {
   return (
     <footer className="footer">
@@ -73,10 +75,34 @@ function Main() {
 }
 
 function Header() {
+  const [task, setTask] = useState('');
+  const dispatch = useDispatch();
+  // 回车事件
+  const handleEnterPress = (e: any) => {
+    if (e.charCode === 13) {
+      console.log('回车');
+      // 调用action
+      dispatch(addActionCreator(task));
+      // 清空task
+      setTask('');
+    }
+  };
   return (
     <header className="header">
       <h1>todos</h1>
-      <input className="new-todo" placeholder="需要做什么" autoFocus />
+      {/* 改为受控组件 */}
+      <input
+        className="new-todo"
+        placeholder="需要做什么"
+        autoFocus
+        value={task}
+        onChange={(e) => {
+          setTask(e.target.value);
+        }}
+        onKeyPress={(e) => {
+          handleEnterPress(e);
+        }}
+      />
     </header>
   );
 }
