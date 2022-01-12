@@ -1,6 +1,7 @@
 import {
   TODO_ADD,
   TODO_CHECK,
+  TODO_CLEAR,
   TODO_DEL,
   TODO_TYPE,
 } from '../action/actionType';
@@ -69,7 +70,11 @@ export default function todoReducer(
         ...state,
         current: payload,
       };
-
+    case TODO_CLEAR:
+      return {
+        ...state,
+        list: state.list.filter((item) => !item.isDone),
+      };
     default:
       return state;
   }

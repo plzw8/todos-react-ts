@@ -1,4 +1,10 @@
-import { TODO_ADD, TODO_CHECK, TODO_DEL, TODO_TYPE } from './actionType';
+import {
+  TODO_ADD,
+  TODO_CHECK,
+  TODO_CLEAR,
+  TODO_DEL,
+  TODO_TYPE,
+} from './actionType';
 
 export const addActionCreator = (task: string) => {
   return {
@@ -22,5 +28,10 @@ export const changeTypeActionCreator = (type: string) => {
   return {
     type: TODO_TYPE,
     payload: type,
+  };
+};
+export const clearTypeActionCreator = () => {
+  return {
+    type: TODO_CLEAR,
   };
 };

@@ -7,6 +7,7 @@ import {
   addActionCreator,
   changeTypeActionCreator,
   checkActionCreator,
+  clearTypeActionCreator,
   delActionCreator,
 } from './store/action/todo';
 import { RootState } from './store/reducer';
@@ -72,7 +73,14 @@ function Footer() {
           </a>
         </li>
       </ul>
-      <button className="clear-completed">清除已完成</button>
+      <button
+        className="clear-completed"
+        onClick={() => {
+          dispatch(clearTypeActionCreator());
+        }}
+      >
+        清除已完成
+      </button>
     </footer>
   );
 }
