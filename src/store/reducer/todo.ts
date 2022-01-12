@@ -49,7 +49,10 @@ export type ActionType =
       payload: boolean;
     };
 
-export default function todoReducer(state = initialState, action: ActionType) {
+export default function todoReducer(
+  state = initialState,
+  action: ActionType
+): typeof initialState {
   switch (action.type) {
     case 'todo/add':
       return {
