@@ -1,4 +1,4 @@
-import { TODO_ADD, TODO_DEL } from '../action/actionType';
+import { TODO_ADD, TODO_CHECK, TODO_DEL } from '../action/actionType';
 // 声明state的Type
 type StateType = {
   list: {
@@ -14,6 +14,11 @@ const initialState: StateType = {
       id: 1,
       task: 'hi',
       isDone: false,
+    },
+    {
+      id: 2,
+      task: 'react',
+      isDone: true,
     },
   ],
   current: 'all',
@@ -45,6 +50,14 @@ export default function todoReducer(
       return {
         ...state,
         list: state.list.filter((item) => item.id !== payload),
+      };
+    case TODO_CHECK:
+      return {
+        ...state,
+        list: state.list.map((item) => ({
+          ...item,
+          isDone: item.id === payload ? !item.isDone : item.isDone,
+        })),
       };
 
     default:

@@ -3,7 +3,11 @@
  */
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addActionCreator, delActionCreator } from './store/action/todo';
+import {
+  addActionCreator,
+  checkActionCreator,
+  delActionCreator,
+} from './store/action/todo';
 import { RootState } from './store/reducer';
 import './styles/base.css';
 import './styles/index.css';
@@ -54,16 +58,27 @@ function Footer() {
 function Main() {
   const list = useSelector((state: RootState) => state.todo.list);
   const dispatch = useDispatch();
-
+  // 点击小选框
+  const handleClickCheckbox = (id: number) => {
+    dispatch(checkActionCreator(id));
+  };
   return (
     <section className="main">
       <input id="toggle-all" className="toggle-all" type="checkbox" />
       <label htmlFor="toggle-all">全选</label>
       <ul className="todo-list">
         {list.map((item) => (
-          <li className="completed" key={item.id}>
+          <li className={item.isDone ? 'completed' : ''} key={item.id}>
             <div className="view">
-              <input className="toggle" type="checkbox" />
+              {/* 改造为受控组件 */}
+              <input
+                className="toggle"
+                type="checkbox"
+                checked={item.isDone}
+                onChange={() => {
+                  handleClickCheckbox(item.id);
+                }}
+              />
               <label>{item.task}</label>
               <button
                 className="destroy"
