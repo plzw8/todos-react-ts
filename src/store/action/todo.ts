@@ -3,6 +3,7 @@ import {
   TODO_CHECK,
   TODO_CLEAR,
   TODO_DEL,
+  TODO_SELECT_ALL,
   TODO_TYPE,
 } from './actionType';
 
@@ -33,5 +34,11 @@ export const changeTypeActionCreator = (type: string) => {
 export const clearTypeActionCreator = () => {
   return {
     type: TODO_CLEAR,
+  };
+};
+export const selectAllTypeActionCreator = (isSelectAll: boolean) => {
+  return {
+    type: TODO_SELECT_ALL,
+    payload: isSelectAll,
   };
 };

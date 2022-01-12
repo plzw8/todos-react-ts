@@ -3,6 +3,7 @@ import {
   TODO_CHECK,
   TODO_CLEAR,
   TODO_DEL,
+  TODO_SELECT_ALL,
   TODO_TYPE,
 } from '../action/actionType';
 // 声明state的Type
@@ -74,6 +75,14 @@ export default function todoReducer(
       return {
         ...state,
         list: state.list.filter((item) => !item.isDone),
+      };
+    case TODO_SELECT_ALL:
+      return {
+        ...state,
+        list: state.list.map((item) => ({
+          ...item,
+          isDone: true,
+        })),
       };
     default:
       return state;

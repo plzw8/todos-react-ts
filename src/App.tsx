@@ -9,6 +9,7 @@ import {
   checkActionCreator,
   clearTypeActionCreator,
   delActionCreator,
+  selectAllTypeActionCreator,
 } from './store/action/todo';
 import { RootState } from './store/reducer';
 import './styles/base.css';
@@ -99,9 +100,19 @@ function Main() {
   const handleClickCheckbox = (id: number) => {
     dispatch(checkActionCreator(id));
   };
+  // 小选影响全选
+  const isSelectAll = list.length ? list.every((item) => item.isDone) : false;
   return (
     <section className="main">
-      <input id="toggle-all" className="toggle-all" type="checkbox" />
+      <input
+        id="toggle-all"
+        className="toggle-all"
+        type="checkbox"
+        checked={isSelectAll}
+        onChange={(e) => {
+          dispatch(selectAllTypeActionCreator(true));
+        }}
+      />
       <label htmlFor="toggle-all">全选</label>
       <ul className="todo-list">
         {showList.map((item) => (
