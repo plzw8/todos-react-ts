@@ -11,8 +11,10 @@ const initialState = {
       isDone: true,
     },
   ],
-  current: 'all',
+  current: 'all' as CurrentFilterType,
 };
+// 声明current的type 使用字面量类型
+export type CurrentFilterType = 'all' | 'active' | 'completed';
 
 // 声明action的Type
 export type ActionType =
@@ -30,7 +32,7 @@ export type ActionType =
     }
   | {
       type: 'todo/type';
-      payload: string;
+      payload: CurrentFilterType;
     }
   | {
       type: 'todo/clear';

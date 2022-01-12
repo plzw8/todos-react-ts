@@ -1,4 +1,4 @@
-import { ActionType } from '../reducer/todo';
+import { ActionType, CurrentFilterType } from '../reducer/todo';
 
 export const addActionCreator = (task: string): ActionType => {
   return {
@@ -18,7 +18,9 @@ export const checkActionCreator = (id: number): ActionType => {
     payload: id,
   };
 };
-export const changeTypeActionCreator = (type: string): ActionType => {
+export const changeTypeActionCreator = (
+  type: CurrentFilterType
+): ActionType => {
   return {
     type: 'todo/type',
     payload: type,
