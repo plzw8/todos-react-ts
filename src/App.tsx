@@ -2,7 +2,7 @@
  *  学习目标：Todos 案例
  */
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   addActionCreator,
   changeTypeActionCreator,
@@ -11,11 +11,11 @@ import {
   delActionCreator,
   selectAllTypeActionCreator,
 } from './store/action/todo';
-import { RootState } from './store/reducer';
 import './styles/base.css';
 import './styles/index.css';
 
 import React from 'react';
+import { useAppSelector } from './store';
 
 export default function App() {
   return (
@@ -32,8 +32,9 @@ export default function App() {
 
 function Footer() {
   const dispatch = useDispatch();
-  const list = useSelector((state: RootState) => state.todo.list);
-  const type = useSelector((state: RootState) => state.todo.current);
+  // const list = useSelector((state: RootState) => state.todo.list);
+  // const type = useSelector((state: RootState) => state.todo.current);
+  const { list, current: type } = useAppSelector((state) => state.todo);
 
   // 剩余长度
   const restVal = list.filter((item) => !item.isDone)?.length;
@@ -87,10 +88,11 @@ function Footer() {
 }
 
 function Main() {
-  const list = useSelector((state: RootState) => state.todo.list);
+  // const list = useSelector((state: RootState) => state.todo.list);
+  // const type = useSelector((state: RootState) => state.todo.current);
+  const { list, current: type } = useAppSelector((state) => state.todo);
   const dispatch = useDispatch();
   // 根据type 定义一个显示列表
-  const type = useSelector((state: RootState) => state.todo.current);
   const showList = list.filter((item) => {
     if (type === 'active') return !item.isDone;
     if (type === 'completed') return item.isDone;
@@ -146,8 +148,19 @@ function Header() {
   const [task, setTask] = useState('');
   const dispatch = useDispatch();
   // 回车事件
-  const handleEnterPress = (e: any) => {
-    if (e.charCode === 13) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 安全判定
+    if (e.key === 'Enter' && !task.trim()) {
+      alert('别闹');
+      return;
+    }
+    if (e.key === 'Escape') {
+      // esc事件
+      // 清空task
+      setTask('');
+    }
+    //回车事件
+    if (e.key === 'Enter') {
       console.log('回车');
       // 调用action
       dispatch(addActionCreator(task));
@@ -167,8 +180,8 @@ function Header() {
         onChange={(e) => {
           setTask(e.target.value);
         }}
-        onKeyPress={(e) => {
-          handleEnterPress(e);
+        onKeyDown={(e) => {
+          handleKeyDown(e);
         }}
       />
     </header>
